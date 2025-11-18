@@ -127,7 +127,7 @@ async function setPlayerSource() {
     console.log("Playing ",url);
 
     await postChannel(station.channelName);
-    document.getElementById("player").src = "http://192.168.0.31:8888" + url;
+    document.getElementById("player").src = "http://127.0.0.1:8888" + url;
     playerLoad();
 }
 
