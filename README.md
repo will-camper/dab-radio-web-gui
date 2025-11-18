@@ -6,6 +6,11 @@ Simple HTML/Javascipt GUI to display an interface to welle.io DAB Player
 
 Web UI component intended for integration into e.g. HeadUnit code using welle.io DAB backend.
 
+There are three components
+* The welle.io backend webserver, that provides information on the available multiplexes and will stream the mp3 audio
+* A flask python app that serves the html/javascript components, saves the channel list etc. and proxies calls to welle.io backend
+* The html/javascript interface which communicates with the python app, and plays the media stream directly from welle.io backend.
+
 ## Getting Started
 
 ### Dependencies
@@ -15,6 +20,10 @@ Web UI component intended for integration into e.g. HeadUnit code using welle.io
 
 ### Installing
 
+This 
+* Install dependencies
+* Setup Python environment
+* Pull DAB reference info and station icons from RadioDNS UK https://www.radiodns.uk/
 ```
 git clone git@github.com:will-camper/dab-radio-web-gui.git
 cd dab-radio-web-gui
@@ -31,6 +40,7 @@ cd dab-radio-web-gui
 ## Help
 
 Definately a beta version!
+Sometimes audio will not sync when changing channels. Pause/Play needed to restart 
 
 ## Authors
 
@@ -48,7 +58,8 @@ This project is licensed under the [NAME HERE] License - see the LICENSE.md file
 ## Acknowledgments
 
 Inspiration, code snippets, etc.
-* [welle.io](welle.io)https://www.welle.io)
+* [welle.io](welle.io)https://www.welle.io
+* [Radio DNS UK]https://www.radiodns.uk/
 
 
 
