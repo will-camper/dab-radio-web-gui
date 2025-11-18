@@ -7,7 +7,7 @@ curl https://www.radiodns.uk/services.json --output resources/dab_services.json
 unzip -j resources/logos.zip -d resources
 rm resources/logos.zip
 
-python -m venv .
-source bin/activate
+python -m venv .venv
+source .venv/bin/activate
 
 pip install flask requests
