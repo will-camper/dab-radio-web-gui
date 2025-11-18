@@ -208,8 +208,29 @@ def get_mux():
 # -------------------------------------
 # /radio ENDPOINT
 # -------------------------------------
+@app.route("/radio", methods=["GET"])
+def get_radio_interface():
+    filename = "html/radio.html"
+
+    if not os.path.exists(filename):
+        logger.error(f"{filename} not found")
+        return "html/radio.html not found", 404
+
+    try:
+        with open(filename, "r", encoding="utf-8") as f:
+            html = f.read()
+        logger.info("Served radio interface page")
+        return html, 200, {"Content-Type": "text/html"}
+
+    except Exception:
+        logger.exception(f"Error reading {filename}")
+        return "Error reading HTML file", 500
+
+# -------------------------------------
+# /html/ ENDPOINT
+# -------------------------------------
 @app.route("/html/<path:filename>", methods=["GET"])
-def serve_html():
+def serve_html(filename):
     try:
         full_path = os.path.join(HTML_DIR, filename)
 
