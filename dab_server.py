@@ -10,6 +10,7 @@ app = Flask(__name__)
 DATA_FILE = "data.json"
 current_channel = None
 RESOURCES_DIR = "resources"
+HTML_DIR = "html"
 JS_DIR = "js"
 
 # -------------------------------------
@@ -207,23 +208,21 @@ def get_mux():
 # -------------------------------------
 # /radio ENDPOINT
 # -------------------------------------
-@app.route("/radio", methods=["GET"])
-def get_radio_interface():
-    filename = "radio.html"
-
-    if not os.path.exists(filename):
-        logger.error(f"{filename} not found")
-        return "fm-radio-interface.html not found", 404
-
+@app.route("/html/<path:filename>", methods=["GET"])
+def serve_html():
     try:
-        with open(filename, "r", encoding="utf-8") as f:
-            html = f.read()
-        logger.info("Served radio interface page")
-        return html, 200, {"Content-Type": "text/html"}
+        full_path = os.path.join(HTML_DIR, filename)
+
+        if not os.path.exists(full_path):
+            logger.error(f"html file not found: {full_path}")
+            return "File not found", 404
+
+        logger.info(f"Serving html file: {full_path}")
+        return send_from_directory(HTML_DIR, filename)
 
     except Exception:
-        logger.exception(f"Error reading {filename}")
-        return "Error reading HTML file", 500
+        logger.exception("Error serving /html file")
+        return jsonify({"error": "Internal server error"}), 500
 
 # -------------------------------------
 # /resources ENDPOINT (static file server)
@@ -269,4 +268,5 @@ def serve_js(filename):
 if __name__ == "__main__":
     logger.info("Starting Flask radio service...")
     app.run(host="0.0.0.0", port=5000)
-
+else:
+    gunicorn_app = app

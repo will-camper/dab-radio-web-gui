@@ -10,4 +10,4 @@ rm resources/logos.zip
 python -m venv .venv
 source .venv/bin/activate
 
-pip install flask requests
+pip install -r requirements.txt
